@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+    <head></head>
+    <body>
+        <div id="maincontainer"></div>
+        <script>
+            const mainDiv = document.getElementById("maincontainer");
+
+            // text ex04
+            const ex04Div = document.createElement('div'); 
+            mainDiv.appendChild(ex04Div);
+            const ex04 = document.createTextNode("Exercise 04: Javascript&DOM");
+            ex04Div.style.fontSize = "x-large";
+            ex04Div.style.fontWeight = "bold";
+            ex04Div.appendChild(ex04);
+            
+            // button 
+            // click to display real time
+            // click to stop (loop)
+            // use Web worker
+
+            const buttonDiv = document.createElement('div')
+            const button = document.createElement("button")
+            const buttonText = document.createTextNode("Click me to display Date and Time");
+            buttonDiv.style.marginTop = "25px"
+            buttonDiv.style.marginBottom = "25px"
+            button.appendChild(buttonText)
+            buttonDiv.appendChild(button)
+            mainDiv.appendChild(buttonDiv)
+
+            let time = false;
+            let index = 0;
+            const buttonColor = ['red','green','darkblue','pink','lightGreen','lightBlue'];
+
+            button.addEventListener("click", function buttonClick () {
+                if (time === false) {
+                    w = new Worker("worker.js");  
+                    w.onmessage = function (event) {
+                        button.innerHTML = event.data;
+                        button.style.backgroundColor = buttonColor[index];
+                        if (index < 5) {
+                            index += 1;
+                        }
+                        else {
+                            index = 0;
+                        }
+                    };
+                    time = true;
+                    button.style.position = 'fixed';
+                    button.style.top = '0';
+                    button.style.right = '0';
+                }
+                else {
+                    w.terminate(); 
+                    button.style.position = 'static';
+                    time = false;
+                }
+            });
+
+
+            // personal
+            const personalA = document.createElement("a");
+            personalA.href = "";
+            const personal = document.createTextNode("Personal Info");
+            const color = "pink";
+            personalA.style.color = color;
+            personalA.style.textDecorationLine = "underline";
+            
+            // info
+            let click = false;
+
+            const info = document.createElement("div");
+            const infoPersonal = document.createElement("ul")
+
+            const infoName = document.createElement("li")
+            const infoNameText = document.createTextNode("Saritpat Niyomthong, ID: 63010956")
+            infoName.appendChild(infoNameText)
+            infoPersonal.appendChild(infoName)
+
+            const infoSubject = document.createElement("li")
+            const infoSubjectText = document.createTextNode("Subject: Software Studios")
+            infoSubject.appendChild(infoSubjectText)
+            infoPersonal.appendChild(infoSubject)
+
+            const infoSem = document.createElement("li")
+            const infoSemText = document.createTextNode("Semester: 2")
+            infoSem.appendChild(infoSemText)
+            infoPersonal.appendChild(infoSem)
+
+            personalA.addEventListener('mouseover', function handleMouseOver(event) {
+                personalA.style.color = 'blue';
+                personalA.style.backgroundColor = 'yellow';
+            });
+
+            personalA.addEventListener('mouseout', function handleMouseOut(event) {
+                personalA.style.color = 'pink';
+                personalA.style.backgroundColor = 'white';
+            });
+
+            personalA.addEventListener('click', function handleOnClick(event) {
+                event.preventDefault();
+                if(click === false) {
+                    info.appendChild(infoPersonal);
+                    click = true
+                }
+                else {
+                   info.removeChild(infoPersonal);
+                   click = false
+                } 
+            });
+
+            personalA.appendChild(personal);
+            mainDiv.appendChild(personalA);
+            mainDiv.appendChild(info);
+
+
+
+            // Snapshot
+            // 4 links 
+            // click to change picture (download picture to placeholder)
+            
+            // picture (~ 500 - 600 px)
+
+            //snapshot
+            const snapDiv = document.createElement('div');
+            mainDiv.appendChild(snapDiv);
+
+            const snap = document.createTextNode("Snapshots");
+            snapDiv.style.fontSize = "xx-large";
+            snapDiv.style.fontWeight = "bold";
+            snapDiv.appendChild(snap);
+
+            // picture
+            const picDiv = document.createElement("div")
+            const pic = document.createElement("img")
+            pic.setAttribute("src", "https://sv1.picz.in.th/images/2023/02/23/LygkPv.png")
+            pic.style.height = "500px"
+            pic.style.width = "500px"
+            pic.style.objectFit = "cover"
+
+            //list div
+            const listDiv = document.createElement('div');
+            listDiv.style.padding  = "25px";
+            mainDiv.appendChild(listDiv);
+
+            //list1
+            const list1 = document.createElement('li');
+            listDiv.appendChild(list1);
+
+            const liA1 = document.createElement('a');
+            liA1.href = '';
+            list1.appendChild(liA1);
+            const li1 = document.createTextNode('Fireworks');
+            liA1.appendChild(li1);
+            liA1.addEventListener("click", (event) => {
+                event.preventDefault();
+                pic.setAttribute("src","https://sv1.picz.in.th/images/2023/02/23/LycO6l.jpg")
+            })
+
+            //list2
+            const list2 = document.createElement('li');
+            listDiv.appendChild(list2);
+
+            const liA2 = document.createElement('a');
+            liA2.href = '';
+            list2.appendChild(liA2);
+            const li2 = document.createTextNode('Crest');
+            liA2.appendChild(li2);
+            liA2.addEventListener("click", (event) => {
+                event.preventDefault();
+                pic.setAttribute("src","https://sv1.picz.in.th/images/2023/02/23/LycsOQ.jpg")
+            })
+
+            //list3
+            const list3 = document.createElement('li');
+            listDiv.appendChild(list3);
+
+            const liA3 = document.createElement('a');
+            liA3.href = '';
+            list3.appendChild(liA3);
+            const li3 = document.createTextNode('Action');
+            liA3.appendChild(li3);
+            liA3.addEventListener("click", (event) => {
+                event.preventDefault();
+                pic.setAttribute("src","https://sv1.picz.in.th/images/2023/02/23/Lyc2aS.jpg")
+            })
+
+            //list4
+            const list4 = document.createElement('li');
+            listDiv.appendChild(list4);
+
+            const liA4 = document.createElement('a');
+            liA4.href = '';
+            list4.appendChild(liA4);
+            const li4 = document.createTextNode('Buffalo');
+            liA4.appendChild(li4);
+            liA4.addEventListener("click", (event) => {
+                event.preventDefault();
+                pic.setAttribute("src","https://sv1.picz.in.th/images/2023/02/23/LycvOJ.jpg")
+            })
+
+
+            picDiv.appendChild(pic)
+            mainDiv.appendChild(picDiv)
+            
+
+        </script>
+    </body>
+</html>
